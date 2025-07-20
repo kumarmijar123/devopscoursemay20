@@ -1,0 +1,40 @@
+services:
+ frontend-app:
+    container_name: mywp_app
+    image: wordpress
+    restart: always
+    ports:
+      - "5000:80"
+    volumes:
+      - wpapp_volume:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db_svc
+      WORDPRESS_DB_USER: devopsuser
+      WORDPRESS_DB_PASSWORD: Demo@123
+      WORDPRESS_DB_NAME: mywpapp-db
+    networks:
+      - myapp_network
+
+ db_svc:
+      container_name: mydb_service
+      image: mysql:8.0
+      restart: always
+      environment:
+        MYSQL_ROOT_PASSWORD: ROOT@123
+        MYSQL_DATABASE: mywpapp-db
+        MYSQL_USER: devopsuser
+        MYSQL_PASSWORD: Demo@123
+      volumes:
+        - mysql_app_volume:/var/lib/mysql
+      networks:
+        - myapp_network
+
+
+volumes:
+   wpapp_volume:
+   mysql_app_volume:
+
+networks:
+   myapp_network:
+
+  

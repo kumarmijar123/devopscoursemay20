@@ -1,0 +1,16 @@
+ services:
+  frontened:
+    build: .
+    ports:
+      - "8080:5000"
+    networks:
+      - myappnetwork
+
+  db:
+    image: "redis:alpine"
+    networks:
+      - myappnetwork
+
+
+ networks:
+  myappnetwork:
